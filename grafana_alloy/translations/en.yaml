@@ -6,6 +6,15 @@ configuration:
   prometheus_write_endpoint:
     name: Prometheus Write Endpoint
     description: Full URL to send metrics to.
+  prometheus_grafanacloud:
+    name: Enable Prometheus Basic Auth
+    description: Enable basic auth for the Prometheus endpoint (e.g. Grafana Cloud). If enabled, prometheus_grafanacloud_username and prometheus_grafanacloud_password are required
+  prometheus_grafanacloud_username:
+    name: Prometheus Basic Auth Username
+    description: Prometheus basic auth username
+  prometheus_grafanacloud_password:
+    name: Prometheus Basic Auth Password
+    description: Prometheus basic auth password
   enable_unix_component:
     name: Enable Unix System Metrics
     description: Enables prometheus.exporter.unix component to collect node_exporter metrics
@@ -27,6 +36,15 @@ configuration:
   loki_endpoint:
     name: Loki Endpoint
     description: Full Loki URL to send logs to
+  loki_grafanacloud:
+    name: Enable Loki Basic Auth
+    description: Enable basic auth for the Loki endpoint (e.g. Grafana Cloud). If enabled, loki_grafanacloud_username and loki_grafanacloud_password are required
+  loki_grafanacloud_username:
+    name: Loki Basic Auth Username
+    description: Loki basic auth username
+  loki_grafanacloud_password:
+    name: Loki Basic Auth Password
+    description: Loki basic auth password
   override_config:
     name: Override Config
     description: If enabled, all other options will be ignored and you can supply your own Alloy config
