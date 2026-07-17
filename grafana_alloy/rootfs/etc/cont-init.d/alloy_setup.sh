@@ -22,6 +22,20 @@ else
             PROMETHEUS_ENDPOINT="$(bashio::config "prometheus_write_endpoint")"
         fi
 
+        if bashio::config.true 'prometheus_grafanacloud'; then
+            bashio::config.require 'prometheus_grafanacloud_username' "Grafanacloud username required for prometheus grafanacloud"
+            bashio::config.require 'prometheus_grafanacloud_password' "Grafanacloud password required for prometheus grafanacloud"
+
+            prometheus_auth="
+                basic_auth {
+                    username = \"$(bashio::config "prometheus_grafanacloud_username")\"
+                    password = \"$(bashio::config "prometheus_grafanacloud_password")\"
+                }
+            "
+        else
+            prometheus_auth=""
+        fi 
+
         # Servername External Label
         if bashio::config.has_value 'servername_tag'; then
             EXTERNAL_LABELS="
@@ -44,6 +58,7 @@ else
         prometheus.remote_write \"default\" {
             endpoint {
                 url = \"$PROMETHEUS_ENDPOINT\"
+                $prometheus_auth
 
                 metadata_config {
                     send_interval = \"$(bashio::config "prometheus_scrape_interval")\"
@@ -132,7 +147,6 @@ else
             loki_auth=""
         fi 
 
-
         export LOKI_CONFIG="
         loki.relabel \"journal\" {
             forward_to = []
@@ -168,8 +182,8 @@ else
         loki.write \"endpoint\" {
             endpoint {
                 url = \"$(bashio::config "loki_endpoint")\"
+                $loki_auth
             }
-            $loki_auth
         }"
     fi
     envsubst < $CONFIG_TEMPLATE > $CONFIG_FILE
