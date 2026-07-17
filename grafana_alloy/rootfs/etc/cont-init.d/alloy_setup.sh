@@ -118,6 +118,21 @@ else
             syslog_config=""
         fi
 
+        if bashio::config.true 'loki_grafanacloud'; then
+            bashio::config.require 'loki_grafanacloud_username' "Grafanacloud username required for loki grafanacloud"
+            bashio::config.require 'loki_grafanacloud_password' "Grafanacloud password required for loki grafanacloud"
+
+            loki_auth="
+                basic_auth {
+                    username = \"$(bashio::config "loki_grafanacloud_username")\"
+                    password = \"$(bashio::config "loki_grafanacloud_password")\"
+                }
+            "
+        else
+            loki_auth=""
+        fi 
+
+
         export LOKI_CONFIG="
         loki.relabel \"journal\" {
             forward_to = []
@@ -154,6 +169,7 @@ else
             endpoint {
                 url = \"$(bashio::config "loki_endpoint")\"
             }
+            $loki_auth
         }"
     fi
     envsubst < $CONFIG_TEMPLATE > $CONFIG_FILE
