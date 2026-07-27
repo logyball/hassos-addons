@@ -29,7 +29,7 @@ else
             PROMETHEUS_ENDPOINT="$(bashio::config "prometheus_write_endpoint")"
         fi
 
-        if bashio::config.has_value 'prometheus_basic_auth.username' && bashio::config.has_value 'prometheus_basic_auth.username'; then
+        if bashio::config.has_value 'prometheus_basic_auth.username' && bashio::config.has_value 'prometheus_basic_auth.password'; then
             prometheus_auth="
                 basic_auth {
                     username = \"$(river_escape "$(bashio::config "prometheus_basic_auth.username")")\"
@@ -137,7 +137,7 @@ else
             syslog_config=""
         fi
 
-        if bashio::config.has_value 'loki_basic_auth.username' && bashio::config.has_value 'loki_basic_auth.username'; then
+        if bashio::config.has_value 'loki_basic_auth.username' && bashio::config.has_value 'loki_basic_auth.password'; then
             loki_auth="
                 basic_auth {
                     username = \"$(river_escape "$(bashio::config "loki_basic_auth.username")")\"

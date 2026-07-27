@@ -44,7 +44,7 @@ schema:
   prometheus_write_endpoint: str?
   prometheus_basic_auth:
     username: str?
-    password: str?
+    password: password?
   enable_unix_component: bool
   enable_process_component: bool
   prometheus_scrape_interval: list(15s|30s|60s)
@@ -54,7 +54,7 @@ schema:
   loki_endpoint: str?
   loki_basic_auth:
     username: str?
-    password: str?
+    password: password?
   enable_loki_syslog: bool
   override_config: bool
   override_config_path: str?
