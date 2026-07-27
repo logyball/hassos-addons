@@ -32,8 +32,8 @@ else
         if bashio::config.has_value 'prometheus_basic_auth.username' && bashio::config.has_value 'prometheus_basic_auth.username'; then
             prometheus_auth="
                 basic_auth {
-                    username = \"$(bashio::config "prometheus_basic_auth.username")\"
-                    password = \"$(bashio::config "prometheus_basic_auth.password")\"
+                    username = \"$(river_escape "$(bashio::config "prometheus_basic_auth.username")")\"
+                    password = \"$(river_escape "$(bashio::config "prometheus_basic_auth.password")")\"
                 }
             "
         else
@@ -140,8 +140,8 @@ else
         if bashio::config.has_value 'loki_basic_auth.username' && bashio::config.has_value 'loki_basic_auth.username'; then
             loki_auth="
                 basic_auth {
-                    username = \"$(bashio::config "loki_basic_auth.username")\"
-                    password = \"$(bashio::config "loki_basic_auth.password")\"
+                    username = \"$(river_escape "$(bashio::config "loki_basic_auth.username")")\"
+                    password = \"$(river_escape "$(bashio::config "loki_basic_auth.password")")\"
                 }
             "
         else
